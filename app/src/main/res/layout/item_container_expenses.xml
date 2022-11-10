@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_3sdp">
+
+
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Xóa"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8ssp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/textName"
+        app:layout_constraintTop_toBottomOf="@+id/textName"
+        tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnModify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:backgroundTint="@color/Java"
+        android:text="Chỉnh sửa"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8ssp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+        app:layout_constraintTop_toBottomOf="@+id/textName"
+        tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
