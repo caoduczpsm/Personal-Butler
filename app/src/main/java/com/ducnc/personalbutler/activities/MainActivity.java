@@ -1,9 +1,5 @@
 package com.ducnc.personalbutler.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -20,20 +16,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.ducnc.personalbutler.R;
 import com.ducnc.personalbutler.adapters.ExpensesAdapter;
+import com.ducnc.personalbutler.adapters.ExpensesMainAdapter;
 import com.ducnc.personalbutler.adapters.MoneyAdapter;
 import com.ducnc.personalbutler.listeners.ExpensesListener;
 import com.ducnc.personalbutler.models.Expenses;
 import com.ducnc.personalbutler.ultilities.Constants;
 import com.ducnc.personalbutler.ultilities.PreferenceManager;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import org.eazegraph.lib.charts.PieChart;
-import org.eazegraph.lib.models.PieModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,14 +46,18 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements ExpensesListener {
 
-    TextView tvR, tvPython, tvCPP, tvJava, textName, txtMoney;
+    TextView textName, txtMoney, textTotal;
     ImageView imgLogout, imgEdit;
     PieChart pieChart;
-    ConstraintLayout layoutExpenses, layoutManager;
+    PieDataSet pieDataSet;
+    ConstraintLayout layoutExpenses, layoutManager, layoutChart;
     List<Expenses> listExpenses;
     List<Expenses> moneyList;
+    List<Expenses> expensesMainList;
     ExpensesAdapter expensesAdapter;
     MoneyAdapter moneyAdapter;
+    ExpensesMainAdapter expensesMainAdapter;
+    RecyclerView expensesRecyclerView;
 
     FirebaseFirestore database;
     PreferenceManager preferenceManager;
@@ -64,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
         init();
         createPieChart();
         setListener();
+        getListExpenses();
 
         database.collection(Constants.KEY_COLLECTION_USER)
                 .document(preferenceManager.getString(Constants.KEY_USER_ID))
@@ -77,23 +85,21 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     private void init() {
 
         database = FirebaseFirestore.getInstance();
         preferenceManager = new PreferenceManager(getApplicationContext());
         currentDate = Calendar.getInstance();
 
-        tvR = findViewById(R.id.tvR);
-        tvPython = findViewById(R.id.tvPython);
-        tvCPP = findViewById(R.id.tvCPP);
-        tvJava = findViewById(R.id.tvJava);
         textName = findViewById(R.id.textName);
         txtMoney = findViewById(R.id.txtMoney);
+        textTotal = findViewById(R.id.textTotal);
         imgLogout = findViewById(R.id.imgLogout);
         imgEdit = findViewById(R.id.imgEdit);
         pieChart = findViewById(R.id.pieChart);
 
+        expensesRecyclerView = findViewById(R.id.expensesRecyclerView);
 
         database.collection(Constants.KEY_MONTH)
                 .document(currentDate.get(Calendar.YEAR) + "")
@@ -111,14 +117,37 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
 
         layoutExpenses = findViewById(R.id.layoutExpenses);
         layoutManager = findViewById(R.id.layoutManager);
+        layoutChart = findViewById(R.id.layoutChart);
         listExpenses = new ArrayList<>();
         moneyList = new ArrayList<>();
+        expensesMainList = new ArrayList<>();
 
-        tvR.setText(Integer.toString(40));
-        tvPython.setText(Integer.toString(30));
-        tvCPP.setText(Integer.toString(5));
-        tvJava.setText(Integer.toString(25));
 
+    }
+
+    @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
+    private void getListExpenses(){
+        expensesMainAdapter = new ExpensesMainAdapter(expensesMainList, this);
+        expensesRecyclerView.setAdapter(expensesMainAdapter);
+        expensesRecyclerView.setVisibility(View.VISIBLE);
+        database.collection(Constants.KEY_DAY)
+                .document(currentDate.get(Calendar.MONTH) + 1 + "")
+                .collection(Constants.KEY_DAY)
+                .document(currentDate.get(Calendar.DAY_OF_MONTH) + "")
+                .collection(Constants.KEY_EXPENSES)
+                .get()
+                .addOnCompleteListener(task -> {
+                    int total = 0;
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                        Expenses expenses = new Expenses();
+                        expenses.setName(queryDocumentSnapshot.getString(Constants.KEY_EXPENSES));
+                        expenses.setAmount(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY));
+                        total = total + Integer.parseInt(Objects.requireNonNull(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY)));
+                        expensesMainList.add(expenses);
+                        expensesMainAdapter.notifyDataSetChanged();
+                    }
+                    textTotal.setText("Tổng cộng: " + total + " VNĐ");
+                });
     }
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
@@ -129,6 +158,11 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
         imgEdit.setOnClickListener(view -> editMoney());
 
         txtMoney.setOnClickListener(view -> editMoney());
+
+        textName.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), TempActivity.class);
+            startActivity(intent);
+        });
 
         layoutManager.setOnClickListener(view -> {
             final Dialog dialog = openDialog(R.layout.layout_dialog_manager_money_expenses);
@@ -173,8 +207,9 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
             final Dialog dialog = openDialog(R.layout.layout_dialog_expenses);
 
             assert dialog != null;
-            RecyclerView expensesRecyclerView = dialog.findViewById(R.id.listExpenses);
+            RecyclerView expensesRecyclerView = dialog.findViewById(R.id.recyclerViewExpenses);
             Button btnAdd = dialog.findViewById(R.id.btnAdd);
+            Button btnClose = dialog.findViewById(R.id.btnClose);
             EditText inputText = dialog.findViewById(R.id.inputText);
 
 
@@ -194,7 +229,8 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                             .collection(Constants.KEY_MONTH)
                             .document(currentDate.get(Calendar.MONTH) + 1 + "")
                             .collection(Constants.KEY_EXPENSES)
-                            .add(money);
+                            .add(money)
+                            .addOnSuccessListener(documentReference -> showToast("Cập nhật khoản chi thành công!"));
 
                     inputText.setText("");
                 } else {
@@ -236,7 +272,14 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
 
             listExpenses.clear();
 
+            btnClose.setOnClickListener(view1 -> dialog.dismiss());
+
             dialog.show();
+        });
+
+        layoutChart.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ChartActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -315,8 +358,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                                         });
                             }
                         });
-
-
+                createPieChart();
             } else {
                 showToast("Vui lòng nhập nguồn tiền cố định!");
             }
@@ -392,27 +434,35 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
     }
 
     private void createPieChart() {
-        pieChart.addPieSlice(
-                new PieModel(
-                        "R",
-                        Integer.parseInt(tvR.getText().toString()),
-                        Color.parseColor("#FFA726")));
-        pieChart.addPieSlice(
-                new PieModel(
-                        "Python",
-                        Integer.parseInt(tvPython.getText().toString()),
-                        Color.parseColor("#66BB6A")));
-        pieChart.addPieSlice(
-                new PieModel(
-                        "C++",
-                        Integer.parseInt(tvCPP.getText().toString()),
-                        Color.parseColor("#EF5350")));
-        pieChart.addPieSlice(
-                new PieModel(
-                        "Java",
-                        Integer.parseInt(tvJava.getText().toString()),
-                        Color.parseColor("#29B6F6")));
-        pieChart.startAnimation();
+        database.collection(Constants.KEY_DAY)
+                .document(currentDate.get(Calendar.MONTH) + 1 + "")
+                .collection(Constants.KEY_DAY)
+                .document(currentDate.get(Calendar.DAY_OF_MONTH) + "")
+                .collection(Constants.KEY_EXPENSES)
+                .get()
+                .addOnCompleteListener(task -> {
+                    ArrayList<PieEntry> dataVal = new ArrayList<>();
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                        dataVal.add(new PieEntry(Integer.parseInt(Objects.requireNonNull(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY))),
+                                queryDocumentSnapshot.getString(Constants.KEY_EXPENSES)));
+                    }
+                    pieDataSet = new PieDataSet(dataVal, "");
+                    pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                    pieDataSet.setValueTextSize(18f);
+                    PieData pieData = new PieData(pieDataSet);
+                    pieChart.setDrawEntryLabels(false);
+                    pieChart.getDescription().setText("Các khoản chi tiêu ");
+                    pieChart.getDescription().setTextSize(16f);
+                    pieChart.setUsePercentValues(true);
+                    pieChart.setEntryLabelTextSize(18f);
+                    pieChart.setCenterTextRadiusPercent(50);
+                    pieChart.setHoleRadius(30);
+                    pieChart.setTransparentCircleRadius(40);
+                    pieChart.setTransparentCircleColor(Color.RED);
+                    pieChart.setTransparentCircleAlpha(50);
+                    pieChart.setData(pieData);
+                    pieChart.invalidate();
+                });
     }
 
     private void logOut() {
@@ -576,6 +626,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                             }
 
                         });
+                createPieChart();
             } else {
                 showToast("Vui lòng nhập số tiền đã chi!");
             }

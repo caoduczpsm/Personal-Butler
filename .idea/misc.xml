@@ -12,14 +12,17 @@
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/drawable/ic_logout.xml" value="0.1455" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/drawable/layout_dialog_add_money.xml" value="0.1" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/drawable/round_border.xml" value="0.1515" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_chart.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_login.xml" value="0.264" />
-        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_temp.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/item_container_expenses.xml" value="0.25" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/item_container_main_expenses.xml" value="0.18671875" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/item_list_view.xml" value="0.25" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/layout_dialog_add_money.xml" value="0.264" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/layout_dialog_expenses.xml" value="0.264" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/layout_dialog_manager_money.xml" value="0.264" />
-        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/layout_dialog_manager_money_expenses.xml" value="0.1" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/layout_dialog_manager_money_expenses.xml" value="0.16" />
         <entry key="..\:/Users/DucNC/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.25" />
       </map>
     </option>

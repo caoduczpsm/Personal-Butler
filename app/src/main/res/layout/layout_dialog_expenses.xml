@@ -60,7 +60,7 @@
         tools:ignore="HardcodedText" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listExpenses"
+        android:id="@+id/recyclerViewExpenses"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_15sdp"
@@ -70,12 +70,36 @@
         android:padding="@dimen/_15ssp"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintHeight="wrap"
-        app:layout_constraintHeight_percent="0.7"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight="wrap"
+        app:layout_constraintHeight_percent="0.6"
         app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputText"/>
+        app:layout_constraintTop_toBottomOf="@+id/inputText" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewExpenses">
+
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Đóng"
+            android:textSize="@dimen/_18ssp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:layout_margin="@dimen/_5sdp"
+            tools:ignore="ButtonStyle,HardcodedText"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

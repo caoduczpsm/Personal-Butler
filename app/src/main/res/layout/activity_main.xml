@@ -250,9 +250,12 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
@@ -260,13 +263,13 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewGraph"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_height="300dp"
                     android:background="@color/white"
                     android:elevation="10dp"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -276,108 +279,16 @@
                         android:weightSum="2">
 
 
-                        <org.eazegraph.lib.charts.PieChart
+                        <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/pieChart"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginStart="15dp"
                             android:layout_marginTop="15dp"
                             android:layout_marginBottom="15dp"
                             android:layout_weight="1"
-                            android:padding="6dp"/>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="15dp"
-                                android:layout_gravity="center_vertical">
-
-                                <View
-                                    android:layout_width="15dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/R" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingStart="10dp"
-                                    android:text="Tiền ăn"
-                                    android:textColor="@color/black"
-                                    tools:ignore="HardcodedText,RtlSymmetry" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="15dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginTop="5dp">
-
-                                <View
-                                    android:layout_width="15dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/Python" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingStart="10dp"
-                                    android:text="Tiền mua sắm"
-                                    android:textColor="@color/black"
-                                    tools:ignore="HardcodedText,RtlSymmetry" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="15dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginTop="5dp">
-
-                                <View
-                                    android:layout_width="15dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/CPP" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingStart="10dp"
-                                    android:text="Tiền học"
-                                    android:textColor="@color/black"
-                                    tools:ignore="HardcodedText,RtlSymmetry" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="15dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginTop="5dp">
-
-                                <View
-                                    android:layout_width="15dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/Java" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:paddingStart="10dp"
-                                    android:text="Tiền chơi"
-                                    android:textColor="@color/black"
-                                    tools:ignore="HardcodedText,RtlSymmetry" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                            android:padding="6dp"
+                            tools:ignore="InefficientWeight" />
 
                     </LinearLayout>
 
@@ -386,17 +297,17 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/details"
                     android:layout_width="match_parent"
-                    android:layout_height="260dp"
-                    android:layout_below="@+id/cardViewGraph"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/white"
                     android:elevation="10dp"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="10dp"
+                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewGraph">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white"
@@ -404,181 +315,69 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/textView2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Các khoản chi trong tháng"
+                            android:gravity="center"
+                            android:text="Các khoản chi trong ngày"
                             android:textColor="@color/black"
-                            android:textSize="23sp"
+                            android:textSize="@dimen/_20ssp"
                             android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="HardcodedText,RtlSymmetry" />
 
                         <View
+                            android:id="@+id/view"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
+                            android:background="@color/color_two"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView2"
+                            tools:layout_editor_absoluteX="20dp" />
 
-                        <RelativeLayout
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/expensesRecyclerView"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
-
-                            <!--Text view to display R -->
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:text="Tiền ăn"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-
-                            <TextView
-                                android:id="@+id/tvR"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-                        </RelativeLayout>
-
-                        <!--View to display the line-->
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:text="Tiền mua sẵm"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-
-
-                            <TextView
-                                android:id="@+id/tvPython"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-
-                        </RelativeLayout>
+                            android:layout_height="0dp"
+                            android:padding="@dimen/_15sdp"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHeight_percent="0.7"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/view" />
 
                         <View
+                            android:id="@+id/view2"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
+                            android:background="@color/color_two"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/expensesRecyclerView"
+                            tools:layout_editor_absoluteX="20dp" />
 
-                        <RelativeLayout
+                        <TextView
+                            android:id="@+id/textTotal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
+                            android:gravity="right"
+                            android:text="Tổng cộng: 0 VNĐ"
+                            android:textColor="#BD0000"
+                            android:textSize="@dimen/_16ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view2"
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,TextContrastCheck" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:text="Tiền học"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-
-
-                            <TextView
-                                android:id="@+id/tvCPP"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:text="Tiền chơi"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-
-                            <TextView
-                                android:id="@+id/tvJava"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                tools:ignore="HardcodedText,RtlSymmetry" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
