@@ -12,10 +12,14 @@
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/drawable/ic_logout.xml" value="0.1455" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/drawable/layout_dialog_add_money.xml" value="0.1" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/drawable/round_border.xml" value="0.1515" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/drawable/tab_indicator.xml" value="0.169" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_chart.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_temp.xml" value="0.20521590423257802" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/activity_temp.xml" value="0.2" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/fragment_bar_chart.xml" value="0.10008357709987463" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/fragment_pie.xml" value="0.10008357709987463" />
+        <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/fragment_pie_chart.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/item_container_expenses.xml" value="0.25" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/item_container_main_expenses.xml" value="0.18671875" />
         <entry key="..\:/Users/DucNC/AndroidStudioProjects/PersonalButler/app/src/main/res/layout/item_list_view.xml" value="0.25" />

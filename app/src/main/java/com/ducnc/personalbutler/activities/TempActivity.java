@@ -1,55 +1,40 @@
 package com.ducnc.personalbutler.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.graphics.Color;
+import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import com.ducnc.personalbutler.R;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-
-import java.util.ArrayList;
+import com.ducnc.personalbutler.adapters.ViewPagerAdapter;
+import com.ducnc.personalbutler.fragment.BarChartFragment;
+import com.ducnc.personalbutler.fragment.PieChartFragment;
+import com.ducnc.personalbutler.fragment.RadarChartFragment;
+import com.google.android.material.tabs.TabLayout;
 
 public class TempActivity extends AppCompatActivity {
 
-    PieChart pieChart;
-    int [] colorClassArray = new int[]{Color.LTGRAY, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.GREEN, Color.MAGENTA, Color.RED};
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
 
-        pieChart = findViewById(R.id.pieChart);
-        PieDataSet pieDataSet = new PieDataSet(dataValues(), "");
-        pieDataSet.setColors(colorClassArray);
 
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setDrawEntryLabels(false);
-        pieChart.setUsePercentValues(false);
-        pieChart.setCenterText("Data");
-        pieChart.setCenterTextSize(14f);
-        pieChart.setCenterTextRadiusPercent(50);
-        pieChart.setHoleRadius(30);
-        pieChart.setTransparentCircleRadius(40);
-        pieChart.setTransparentCircleColor(Color.RED);
-        pieChart.setTransparentCircleAlpha(50);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new PieChartFragment(), "Tròn");
+        adapter.addFragment(new BarChartFragment(), "Cột");
+        adapter.addFragment(new RadarChartFragment(), "Mạng");
+
+        viewPager.setAdapter(adapter);
+
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
-    private ArrayList<PieEntry> dataValues(){
-        ArrayList<PieEntry> dataVal = new ArrayList<>();
 
-        dataVal.add(new PieEntry(15, "sun"));
-        dataVal.add(new PieEntry(34, "mon"));
-        dataVal.add(new PieEntry(23, "tue"));
-        dataVal.add(new PieEntry(86, "web"));
-        dataVal.add(new PieEntry(17, "thu"));
-        dataVal.add(new PieEntry(26, "fri"));
-        dataVal.add(new PieEntry(63, "sat"));
-        return dataVal;
-    }
 }

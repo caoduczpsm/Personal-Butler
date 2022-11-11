@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
         init();
         createPieChart();
         setListener();
-        getListExpenses();
 
         database.collection(Constants.KEY_COLLECTION_USER)
                 .document(preferenceManager.getString(Constants.KEY_USER_ID))
@@ -123,31 +122,6 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
         expensesMainList = new ArrayList<>();
 
 
-    }
-
-    @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
-    private void getListExpenses(){
-        expensesMainAdapter = new ExpensesMainAdapter(expensesMainList, this);
-        expensesRecyclerView.setAdapter(expensesMainAdapter);
-        expensesRecyclerView.setVisibility(View.VISIBLE);
-        database.collection(Constants.KEY_DAY)
-                .document(currentDate.get(Calendar.MONTH) + 1 + "")
-                .collection(Constants.KEY_DAY)
-                .document(currentDate.get(Calendar.DAY_OF_MONTH) + "")
-                .collection(Constants.KEY_EXPENSES)
-                .get()
-                .addOnCompleteListener(task -> {
-                    int total = 0;
-                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                        Expenses expenses = new Expenses();
-                        expenses.setName(queryDocumentSnapshot.getString(Constants.KEY_EXPENSES));
-                        expenses.setAmount(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY));
-                        total = total + Integer.parseInt(Objects.requireNonNull(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY)));
-                        expensesMainList.add(expenses);
-                        expensesMainAdapter.notifyDataSetChanged();
-                    }
-                    textTotal.setText("Tổng cộng: " + total + " VNĐ");
-                });
     }
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
@@ -433,7 +407,11 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
 
     }
 
+    @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     private void createPieChart() {
+        expensesMainAdapter = new ExpensesMainAdapter(expensesMainList, this);
+        expensesRecyclerView.setAdapter(expensesMainAdapter);
+        expensesRecyclerView.setVisibility(View.VISIBLE);
         database.collection(Constants.KEY_DAY)
                 .document(currentDate.get(Calendar.MONTH) + 1 + "")
                 .collection(Constants.KEY_DAY)
@@ -442,10 +420,18 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                 .get()
                 .addOnCompleteListener(task -> {
                     ArrayList<PieEntry> dataVal = new ArrayList<>();
+                    int total = 0;
                     for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                         dataVal.add(new PieEntry(Integer.parseInt(Objects.requireNonNull(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY))),
                                 queryDocumentSnapshot.getString(Constants.KEY_EXPENSES)));
+                        Expenses expenses = new Expenses();
+                        expenses.setName(queryDocumentSnapshot.getString(Constants.KEY_EXPENSES));
+                        expenses.setAmount(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY));
+                        total = total + Integer.parseInt(Objects.requireNonNull(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY)));
+                        expensesMainList.add(expenses);
+                        expensesMainAdapter.notifyDataSetChanged();
                     }
+                    textTotal.setText("Tổng cộng: " + total + " VNĐ");
                     pieDataSet = new PieDataSet(dataVal, "");
                     pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
                     pieDataSet.setValueTextSize(18f);
