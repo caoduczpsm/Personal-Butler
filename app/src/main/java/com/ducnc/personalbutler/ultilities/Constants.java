@@ -16,7 +16,7 @@ public class Constants {
     public static final String KEY_REMAINING_MONEY = "remaining";
     public static final String KEY_EXPENSES = "expenses";
     public static final String KEY_AMOUNT_OF_MONEY = "amountOfMoney";
-    public static final String KEY_CHART_TYPE = "chartType";
+    //public static final String KEY_TOTAL_EXPENSES_OF_MONTH = "totalExpenses";
 
 
 }

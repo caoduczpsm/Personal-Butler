@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.ducnc.personalbutler.R;
-import com.ducnc.personalbutler.adapters.PieChartAdapter;
+import com.ducnc.personalbutler.adapters.ChartAdapter;
 import com.ducnc.personalbutler.models.Expenses;
 import com.ducnc.personalbutler.ultilities.Constants;
 import com.ducnc.personalbutler.ultilities.PreferenceManager;
@@ -35,7 +35,7 @@ public class PieChartFragment extends Fragment {
     List<Expenses> expensesDayList, expensesMonthList;
     PieChart pieChartDay, pieChartMonth;
     PieDataSet pieDataSetDay, pieDataSetMonth;
-    PieChartAdapter pieChartDayAdapter, pieChartMonthAdapter;
+    ChartAdapter pieChartDayAdapter, pieChartMonthAdapter;
 
     Calendar currentDate;
 
@@ -104,7 +104,7 @@ public class PieChartFragment extends Fragment {
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     private void createPieChartDay() {
-        pieChartDayAdapter = new PieChartAdapter(expensesDayList);
+        pieChartDayAdapter = new ChartAdapter(expensesDayList);
         expensesDayRecyclerView.setAdapter(pieChartDayAdapter);
         expensesDayRecyclerView.setVisibility(View.VISIBLE);
         database.collection(Constants.KEY_DAY)
@@ -153,7 +153,7 @@ public class PieChartFragment extends Fragment {
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     private void createPieChartMonth() {
-        pieChartMonthAdapter = new PieChartAdapter(expensesMonthList);
+        pieChartMonthAdapter = new ChartAdapter(expensesMonthList);
         expensesMonthRecyclerView.setAdapter(pieChartMonthAdapter);
         expensesMonthRecyclerView.setVisibility(View.VISIBLE);
         database.collection(Constants.KEY_MONTH)

@@ -12,11 +12,11 @@ import com.ducnc.personalbutler.R;
 import com.ducnc.personalbutler.models.Expenses;
 import java.util.List;
 
-public class PieChartAdapter extends RecyclerView.Adapter<PieChartAdapter.PieChartViewHolder> {
+public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.PieChartViewHolder> {
 
     private final List<Expenses> expenses;
 
-    public PieChartAdapter(List<Expenses> expenses) {
+    public ChartAdapter(List<Expenses> expenses) {
         this.expenses = expenses;
     }
 
