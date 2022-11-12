@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E3DDDD"
     tools:context=".activities.ChartActivity">
 
     <com.google.android.material.tabs.TabLayout
@@ -18,6 +19,7 @@
         app:tabSelectedTextColor="@color/white"
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicator="@drawable/tab_indicator"
+        android:background="@drawable/background_tab_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck"/>
