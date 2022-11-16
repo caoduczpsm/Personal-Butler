@@ -147,6 +147,7 @@ public class PieChartFragment extends Fragment {
                     pieChartDay.setTransparentCircleAlpha(50);
                     pieChartDay.setData(pieData);
                     pieChartDay.invalidate();
+                    pieChartDay.animateX(2000);
                 });
 
     }
@@ -195,6 +196,7 @@ public class PieChartFragment extends Fragment {
                     pieChartMonth.setTransparentCircleAlpha(50);
                     pieChartMonth.setData(pieData);
                     pieChartMonth.invalidate();
+                    pieChartMonth.animateX(2000);
                 });
     }
 

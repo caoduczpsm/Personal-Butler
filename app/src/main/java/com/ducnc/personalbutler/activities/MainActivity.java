@@ -28,6 +28,7 @@ import com.ducnc.personalbutler.listeners.ExpensesListener;
 import com.ducnc.personalbutler.models.Expenses;
 import com.ducnc.personalbutler.ultilities.Constants;
 import com.ducnc.personalbutler.ultilities.PreferenceManager;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -449,6 +450,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                     pieChart.setTransparentCircleAlpha(50);
                     pieChart.setData(pieData);
                     pieChart.invalidate();
+                    pieChart.animateX(2000);
                 });
     }
 
