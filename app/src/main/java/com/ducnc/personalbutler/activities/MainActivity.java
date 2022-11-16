@@ -409,6 +409,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     private void createPieChart() {
+        expensesMainList.clear();
         expensesMainAdapter = new ExpensesMainAdapter(expensesMainList, this);
         expensesRecyclerView.setAdapter(expensesMainAdapter);
         expensesRecyclerView.setVisibility(View.VISIBLE);
