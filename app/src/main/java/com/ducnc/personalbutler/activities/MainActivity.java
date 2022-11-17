@@ -47,8 +47,8 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements ExpensesListener {
 
-    TextView textName, txtMoney, textTotal;
-    ImageView imgLogout, imgEdit;
+    TextView textName, txtMoney, textTotal, textRefresh;
+    ImageView imgLogout, imgEdit, imgRefresh;
     PieChart pieChart;
     PieDataSet pieDataSet;
     ConstraintLayout layoutExpenses, layoutManager, layoutChart;
@@ -95,8 +95,12 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
         textName = findViewById(R.id.textName);
         txtMoney = findViewById(R.id.txtMoney);
         textTotal = findViewById(R.id.textTotal);
+        textRefresh = findViewById(R.id.textRefresh);
+
         imgLogout = findViewById(R.id.imgLogout);
         imgEdit = findViewById(R.id.imgEdit);
+        imgRefresh = findViewById(R.id.imgRefresh);
+
         pieChart = findViewById(R.id.pieChart);
 
         expensesRecyclerView = findViewById(R.id.expensesRecyclerView);
@@ -131,6 +135,18 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
         imgLogout.setOnClickListener(view -> logOut());
 
         imgEdit.setOnClickListener(view -> editMoney());
+
+        imgRefresh.setOnClickListener(view -> {
+            textRefresh.setVisibility(View.GONE);
+            imgRefresh.setVisibility(View.GONE);
+            createPieChart();
+        });
+
+        textRefresh.setOnClickListener(view -> {
+            textRefresh.setVisibility(View.GONE);
+            imgRefresh.setVisibility(View.GONE);
+            createPieChart();
+        });
 
         txtMoney.setOnClickListener(view -> editMoney());
 
@@ -333,7 +349,6 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                                         });
                             }
                         });
-                createPieChart();
             } else {
                 showToast("Vui lòng nhập nguồn tiền cố định!");
             }
@@ -439,7 +454,6 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                     pieDataSet.setValueTextSize(18f);
                     PieData pieData = new PieData(pieDataSet);
                     pieChart.setDrawEntryLabels(false);
-                    pieChart.getDescription().setText("Các khoản chi tiêu ");
                     pieChart.getDescription().setTextSize(16f);
                     pieChart.setUsePercentValues(true);
                     pieChart.setEntryLabelTextSize(18f);
@@ -450,6 +464,7 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                     pieChart.setTransparentCircleAlpha(50);
                     pieChart.setData(pieData);
                     pieChart.invalidate();
+                    pieChart.getDescription().setEnabled(false);
                     pieChart.animateX(2000);
                 });
     }
@@ -542,7 +557,8 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                                         .addOnSuccessListener(unused -> {
                                             showToast("Đã cập nhật số tiền thành công!");
                                             dialog.dismiss();
-
+                                            textRefresh.setVisibility(View.VISIBLE);
+                                            imgRefresh.setVisibility(View.VISIBLE);
                                             HashMap<String, Object> expenses = new HashMap<>();
                                             expenses.put(Constants.KEY_EXPENSES, nameExpenses);
                                             expenses.put(Constants.KEY_AMOUNT_OF_MONEY, moneyUsed + "");
@@ -615,7 +631,6 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
                             }
 
                         });
-                createPieChart();
             } else {
                 showToast("Vui lòng nhập số tiền đã chi!");
             }
@@ -624,7 +639,10 @@ public class MainActivity extends AppCompatActivity implements ExpensesListener 
         });
 
 
-        btnClose.setOnClickListener(view1 -> dialog.dismiss());
+        btnClose.setOnClickListener(view1 -> {
+            createPieChart();
+            dialog.dismiss();
+        });
 
         moneyList.clear();
         dialog.show();

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.BarChartFragment">
+    tools:context=".fragment.PieChartFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +14,6 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,10 +74,23 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <TextView
+                android:id="@+id/textDateSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="asdasdas"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewGraph"
@@ -89,7 +101,7 @@
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/textDateSelected">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,9 +115,9 @@
                         android:id="@+id/barChartDay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="2"
                         android:padding="6dp"
                         tools:ignore="InefficientWeight" />
@@ -135,7 +147,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textTitleDay"
+                        android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -155,7 +167,7 @@
                         android:background="@color/color_two"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textTitleDay"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2"
                         tools:layout_editor_absoluteX="20dp" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -165,7 +177,7 @@
                         android:padding="@dimen/_15sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHeight_percent="0.65"
+                        app:layout_constraintHeight_percent="0.7"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view" />
 
@@ -186,9 +198,9 @@
                         android:gravity="right"
                         android:text="Tổng cộng: 0 VNĐ"
                         android:textColor="#BD0000"
-                        android:layout_marginEnd="@dimen/_5sdp"
                         android:textSize="@dimen/_16ssp"
                         android:textStyle="bold"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view2"
@@ -206,11 +218,25 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <TextView
+                android:id="@+id/textSupporter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="asdasdas"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewGraph1"
@@ -221,7 +247,7 @@
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/textSupporter">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -235,9 +261,9 @@
                         android:id="@+id/barChartMonth"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="2"
                         android:padding="6dp"
                         tools:ignore="InefficientWeight" />
@@ -271,7 +297,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Tổng chi các tháng trong năm"
+                        android:text="Các khoản chi trong tháng"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_20ssp"
                         android:textStyle="bold"
@@ -297,7 +323,7 @@
                         android:padding="@dimen/_15sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHeight_percent="0.65"
+                        app:layout_constraintHeight_percent="0.7"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view1" />
 

@@ -1,18 +1,18 @@
 package com.ducnc.personalbutler.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.ducnc.personalbutler.R;
 import com.ducnc.personalbutler.adapters.ChartAdapter;
 import com.ducnc.personalbutler.models.Expenses;
@@ -30,6 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -43,7 +44,7 @@ public class BarChartFragment extends Fragment {
     Calendar currentDate;
 
     ConstraintLayout layoutDay, layoutMonth;
-    TextView textDay, textMonth, textDayTotal, textMonthTotal, textTitleDay, textTitleMonth;
+    TextView textDay, textMonth, textDayTotal, textMonthTotal, textTitleDay, textTitleMonth, textDateSelected;
     RecyclerView expensesDayRecyclerView, expensesMonthRecyclerView;
     View viewSupporterDay, viewSupportMonth;
 
@@ -54,14 +55,19 @@ public class BarChartFragment extends Fragment {
     ArrayList<BarEntry> barEntriesDay, barEntriesMonth;
     BarDataSet barDataSetDay, barDataSetMonth;
     BarData barDataDay, barDataMonth;
-    ArrayList<String> idDay = new ArrayList<>();
+    ArrayList<String> idDay;
     ArrayList<String> idMonth = new ArrayList<>();
+
+    private int lastSelectedYear;
+    private int lastSelectedMonth;
+    private int lastSelectedDayOfMonth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +84,7 @@ public class BarChartFragment extends Fragment {
         textMonthTotal = view.findViewById(R.id.textMonthTotal);
         textTitleDay = view.findViewById(R.id.textTitleDay);
         textTitleMonth = view.findViewById(R.id.textTitleMonth);
+        textDateSelected = view.findViewById(R.id.textDateSelected);
 
         viewSupporterDay = view.findViewById(R.id.viewSupporterDay);
         viewSupportMonth = view.findViewById(R.id.viewSupporterMonth);
@@ -88,6 +95,14 @@ public class BarChartFragment extends Fragment {
         expensesMonthRecyclerView = view.findViewById(R.id.expensesMonthRecyclerView);
         expensesDayRecyclerView = view.findViewById(R.id.expensesDayRecyclerView);
 
+        lastSelectedYear = currentDate.get(Calendar.YEAR);
+        lastSelectedMonth = currentDate.get(Calendar.MONTH);
+        lastSelectedDayOfMonth = currentDate.get(Calendar.DAY_OF_MONTH);
+
+        textDateSelected.setText(lastSelectedDayOfMonth + "/" + (lastSelectedMonth + 1) + "/" + lastSelectedYear);
+
+        textDateSelected.setOnClickListener(view1 -> selectDate());
+
         createBarChartMonth();
         createBarChartDay();
         getDataOfYear();
@@ -96,6 +111,7 @@ public class BarChartFragment extends Fragment {
 
         return view;
     }
+
 
     private void init() {
         preferenceManager = new PreferenceManager(requireContext());
@@ -148,6 +164,59 @@ public class BarChartFragment extends Fragment {
 
             }
         });
+    }
+
+    private void selectDate() {
+        // Date Select Listener.
+        @SuppressLint("SetTextI18n") DatePickerDialog.OnDateSetListener dateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
+
+            textDateSelected.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            lastSelectedYear = year;
+            lastSelectedMonth = monthOfYear;
+            lastSelectedDayOfMonth = dayOfMonth;
+            getDataOfDaySelected(lastSelectedDayOfMonth, lastSelectedMonth + 1);
+        };
+
+        DatePickerDialog datePickerDialog;
+
+
+        datePickerDialog = new DatePickerDialog(getActivity(),
+                dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
+
+        // Show
+        datePickerDialog.show();
+        datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.GREEN);
+        datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN);
+    }
+
+    private void getDataOfDaySelected(int day, int month) {
+        barEntriesDay = new ArrayList<>();
+        idDay = new ArrayList<>();
+        database.collection(Constants.KEY_DAY)
+                .document(month + "")
+                .collection(Constants.KEY_DAY)
+                .document(day + "")
+                .collection(Constants.KEY_EXPENSES)
+                .get()
+                .addOnCompleteListener(task1 -> {
+                    int i = 1;
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task1.getResult()) {
+                        barEntriesDay.add(new BarEntry(i,
+                                Integer.parseInt(Objects.requireNonNull(queryDocumentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY)))));
+                        idDay.add(queryDocumentSnapshot.getId());
+                        i++;
+                    }
+                    barDataSetDay = new BarDataSet(barEntriesDay, "");
+                    barDataSetDay.setColors(ColorTemplate.MATERIAL_COLORS);
+                    barDataSetDay.setValueTextColor(Color.BLACK);
+                    barDataSetDay.setValueTextSize(12f);
+                    barDataDay = new BarData(barDataSetDay);
+                    barChartDay.setFitBars(true);
+                    barChartDay.setData(barDataDay);
+                    barChartDay.getDescription().setEnabled(false);
+                    barChartDay.animateY(2000);
+
+                });
     }
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
@@ -261,9 +330,9 @@ public class BarChartFragment extends Fragment {
         expensesDayRecyclerView.setAdapter(chartDayAdapter);
         expensesDayRecyclerView.setVisibility(View.VISIBLE);
         database.collection(Constants.KEY_DAY)
-                .document(currentDate.get(Calendar.MONTH) + 1 + "")
+                .document((lastSelectedMonth + 1) + "")
                 .collection(Constants.KEY_DAY)
-                .document(currentDate.get(Calendar.DAY_OF_MONTH) + "")
+                .document(lastSelectedDayOfMonth + "")
                 .collection(Constants.KEY_EXPENSES)
                 .document(id)
                 .get()
@@ -272,6 +341,7 @@ public class BarChartFragment extends Fragment {
                     Expenses expenses = new Expenses();
                     expenses.setName(documentSnapshot.getString(Constants.KEY_EXPENSES));
                     expenses.setAmount(documentSnapshot.getString(Constants.KEY_AMOUNT_OF_MONEY));
+                    Log.d("HHH", documentSnapshot.getString(Constants.KEY_EXPENSES) + "null");
                     expensesDayList.add(expenses);
                     chartDayAdapter.notifyDataSetChanged();
                     textDayTotal.setText("Tổng cộng: " + expenses.getAmount() + " VNĐ");
@@ -280,6 +350,7 @@ public class BarChartFragment extends Fragment {
 
     private void createBarChartDay() {
         barEntriesDay = new ArrayList<>();
+        idDay = new ArrayList<>();
         database.collection(Constants.KEY_DAY)
                 .document(currentDate.get(Calendar.MONTH) + 1 + "")
                 .collection(Constants.KEY_DAY)
@@ -294,7 +365,6 @@ public class BarChartFragment extends Fragment {
                         idDay.add(queryDocumentSnapshot.getId());
                         i++;
                     }
-
                     barDataSetDay = new BarDataSet(barEntriesDay, "");
                     barDataSetDay.setColors(ColorTemplate.MATERIAL_COLORS);
                     barDataSetDay.setValueTextColor(Color.BLACK);

@@ -264,6 +264,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
+                <ImageView
+                    android:id="@+id/imgRefresh"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/ic_refresh"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/textRefresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="Tải lại"
+                    android:textSize="@dimen/_16ssp"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgRefresh"
+                    app:layout_constraintStart_toEndOf="@id/imgRefresh"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="HardcodedText" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewGraph"
                     android:layout_width="match_parent"
@@ -273,7 +298,7 @@
                     app:cardCornerRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/imgRefresh">
 
                     <LinearLayout
                         android:layout_width="match_parent"

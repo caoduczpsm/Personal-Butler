@@ -1,39 +1,75 @@
 package com.ducnc.personalbutler.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
+
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+
 import com.ducnc.personalbutler.R;
-import com.ducnc.personalbutler.adapters.ViewPagerAdapter;
-import com.ducnc.personalbutler.fragment.BarChartFragment;
-import com.ducnc.personalbutler.fragment.PieChartFragment;
-import com.ducnc.personalbutler.fragment.RadarChartFragment;
-import com.google.android.material.tabs.TabLayout;
+
+import java.util.Calendar;
 
 public class TempActivity extends AppCompatActivity {
 
-    TabLayout tabLayout;
-    ViewPager viewPager;
-    ViewPagerAdapter adapter;
+    private EditText editTextDate;
+    private CheckBox checkBoxIsSpinnerMode;
+
+    private int lastSelectedYear;
+    private int lastSelectedMonth;
+    private int lastSelectedDayOfMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
 
+        this.editTextDate = (EditText) this.findViewById(R.id.editText_date);
+        Button buttonDate = findViewById(R.id.button_date);
+        this.checkBoxIsSpinnerMode = this.findViewById(R.id.checkBox_isSpinnerMode);
 
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager = findViewById(R.id.viewPager);
+        buttonDate.setOnClickListener(view -> buttonSelectDate());
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PieChartFragment(), "Tròn");
-        adapter.addFragment(new BarChartFragment(), "Cột");
-        adapter.addFragment(new RadarChartFragment(), "Mạng");
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        this.lastSelectedYear = c.get(Calendar.YEAR);
+        this.lastSelectedMonth = c.get(Calendar.MONTH);
+        this.lastSelectedDayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+    }
 
-        viewPager.setAdapter(adapter);
+    // User click on 'Select Date' button.
+    private void buttonSelectDate() {
+        final boolean isSpinnerMode = this.checkBoxIsSpinnerMode.isChecked();
 
-        tabLayout.setupWithViewPager(viewPager);
+        // Date Select Listener.
+        @SuppressLint("SetTextI18n") DatePickerDialog.OnDateSetListener dateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
 
+            editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+            lastSelectedYear = year;
+            lastSelectedMonth = monthOfYear;
+            lastSelectedDayOfMonth = dayOfMonth;
+        };
+
+        DatePickerDialog datePickerDialog;
+
+        if(isSpinnerMode)  {
+            // Create DatePickerDialog:
+            datePickerDialog = new DatePickerDialog(this,
+                    android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                    dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
+        }
+        // Calendar Mode (Default):
+        else {
+            datePickerDialog = new DatePickerDialog(this,
+                    dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
+        }
+
+        // Show
+        datePickerDialog.show();
     }
 
 
