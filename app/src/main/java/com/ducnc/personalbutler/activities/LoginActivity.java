@@ -3,7 +3,9 @@ package com.ducnc.personalbutler.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -255,6 +257,16 @@ public class LoginActivity extends AppCompatActivity {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             return gestureDetector.onTouchEvent(motionEvent);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+
+        final Configuration override = new Configuration(newBase.getResources().getConfiguration());
+        override.fontScale = 1.0f;
+        applyOverrideConfiguration(override);
+
+        super.attachBaseContext(newBase);
     }
 
 }
